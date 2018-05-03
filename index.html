@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/reset.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css" />
     <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great|Press+Start+2P" rel="stylesheet">
-    <script src="assets/javascript/game.js"></script>
+
 </head>
 
 <body>
@@ -24,18 +24,23 @@
         </div>
         <div class="row row2">
             <h2>Press Any Key To Start!</h2>
-            <p id=winNumber>Wins:</p>
-            <p id=lossesNumber>Losses:</p>
+            <p>Wins:
+                <span id=winNumber></span>
+            </p>
+            <p>Losses:
+                <span id=lossesNumber></span>
+            </p>
             <p>Current Word:</p>
-            <p id="current_word"></p>
+            <h2 id="currentWord">_ _ _ _ _ _ _ _ </h2>
             <br>
             <p>Number of Guesses Left:</p>
-            <p id="guesses"></p>
+            <p id="guesses">9</p>
             <p>Letters Already Guessed:</p>
-            <p id="guessed_letters"></p>
+            <p id="guessedLetters">_ _ _ _ _ </p>
         </div>
     </div>
     <footer>&copy; Copyright 2018 Justin Libbee </footer>
+    <script src="assets/javascript/game.js"></script>
 
 </body>
 
