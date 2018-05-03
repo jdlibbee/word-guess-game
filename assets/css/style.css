@@ -42,6 +42,7 @@ header {
     background: rgb(176, 245, 245, 0.6);
     color: black;
     height: 500px;
+    text-align: center;
 }
 #reel {
     width: 400px;

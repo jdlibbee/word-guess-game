@@ -63,14 +63,14 @@ function checkletters(letter) {
     var letterInWord = false;
 
     for (var i = 0; i < blanks; i++) {
-        if (selectedWord[i] == letter) {
+        if (selectedWord[i] == capitalizeFirst(letter, selectedWord)) {
             letterInWord = true;
         }
     }
     if (letterInWord) {
         for (var i = 0; i < blanks; i++) {
-            if (selectedWord[i] == letter) {
-                blanksAndSuccesses[i] = letter;
+            if (selectedWord[i] == capitalizeFirst(letter, selectedWord)) {
+                blanksAndSuccesses[i] = capitalizeFirst(letter, selectedWord);
             }
         }
     }
@@ -93,22 +93,46 @@ function roundComplete() {
     //won
     if (lettersInWord.toString() == blanksAndSuccesses.toString()) {
         wins++;
-        alert("You Won!");
-        document.getElementById("reel").src = '../images/'
-
+        document.getElementById("winLose").innerHTML = "You Won!";
+        document.getElementById("reel").src = './assets/images/' + selectedWord + '.jpeg';
+        if (selectedWord == "Beetlejuice") {
+            playAudio("beetlejuice");
+        }
         //update win counter
         document.getElementById("winNumber").innerHTML = wins;
         startGame();
     }
     else if (guesesLeft == 0) {
         losses++;
-        alert("You lost!");
-
+        document.getElementById("winLose").innerHTML = "You lost!";
+        document.getElementById("reel").src = "./assets/images/gameover.png";
         document.getElementById("lossesNumber").innerHTML = losses;
         startGame();
     }
 }
 
+function capitalizeFirst(letter, selectedWord) {
+    var spacedIndex = 0;
+    //if our letter in our word is at index 0 then it should be capatalized
+    //if the letter comes after a space we will capatalize the first letter
+    if (letter.toUpperCase() === selectedWord[0]) {
+        return letter.toUpperCase();
+    }
+    else if (selectedWord.indexOf(" ") != -1) {
+        spacedIndex = selectedWord.indexOf(" ") + 1;
+        if (letter.toUpperCase() === selectedWord[spacedIndex]) {
+            return letter.toUpperCase();
+        }
+    } else {
+        return letter;
+    }
+
+}
+
+function playAudio() {
+    var x = document.getElementById("audio");
+    x.play();
+}
 //check & debug
 
 //main process
