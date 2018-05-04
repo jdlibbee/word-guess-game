@@ -157,19 +157,19 @@ function capitalizeFirst(letter, selectedWord) {
 
     }
     else if (selectedWord.indexOf(" ") != -1 && alreadyFoundCaps.indexOf(letter.toUpperCase()) == -1) {
-        if () {
-            spacedIndex = selectedWord.indexOf(" ") + 1;
-            if (letter.toUpperCase() === selectedWord[spacedIndex]) {
-                alreadyFoundCaps.push(letter.toUpperCase())
-                return letter.toUpperCase();
-            }
+        // if () {
+        //     spacedIndex = selectedWord.indexOf(" ") + 1;
+        if (letter.toUpperCase() === selectedWord[spacedIndex]) {
+            alreadyFoundCaps.push(letter.toUpperCase())
+            return letter.toUpperCase();
         }
-
     } else {
         return letter;
     }
-
 }
+
+
+
 
 //check & debug
 
