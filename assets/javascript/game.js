@@ -22,7 +22,7 @@ var lettersInWord = [];
 var blanks = 0;
 var blanksAndSuccesses = [];
 var wrongGuesses = [];
-
+var spacedIndex = 0;
 //game counters
 var wins = 0;
 var losses = 0;
@@ -36,15 +36,26 @@ function startGame() {
     lettersInWord = selectedWord.split("");
     blanks = lettersInWord.length;
 
+    console.log(lettersInWord);
+
+
     //reset
     guesesLeft = 9;
     wrongGuesses = [];
     blanksAndSuccesses = [];
+    hiddenValues = [];
+    // document.getElementById("reel").src = "assets/images/mreels.jpeg";
+    // document.getElementById("winLose").innerHTML = " ";
 
-    //populating blanks
-    for (var i = 0; i < blanks; i++) {
+    for (var i = 0; i < lettersInWord.length; i++) {
+        console.log(lettersInWord[i]);
         blanksAndSuccesses.push("_");
+        if (lettersInWord[i] == " ") {
+            blanksAndSuccesses[i] = "&nbsp;";
+        }
     }
+    console.log(blanksAndSuccesses);
+
 
     //html update
     document.getElementById("currentWord").innerHTML = blanksAndSuccesses.join(" ");
@@ -74,6 +85,13 @@ function checkletters(letter) {
             }
         }
     }
+    // else if (letterInWord) {
+    //     for (var i = 0; i < blanks; i++) {
+    //         if (selectedWord[i] == letter) {
+    //             blanksAndSuccesses[i] = letter;
+    //         }
+    //     }
+    // }
     else {
         wrongGuesses.push(letter);
         guesesLeft--;
@@ -96,7 +114,19 @@ function roundComplete() {
         document.getElementById("winLose").innerHTML = "You Won!";
         document.getElementById("reel").src = './assets/images/' + selectedWord + '.jpeg';
         if (selectedWord == "Beetlejuice") {
-            playAudio("beetlejuice");
+            document.getElementById("beetlejuice").play();
+        }
+        else if (selectedWord == "Ghostbusters") {
+            document.getElementById("ghostbusters").play();
+        }
+        else if (selectedWord == "Gremlins") {
+            document.getElementById("gremlins").play();
+        }
+        else if (selectedWord == "Labyrinth") {
+            document.getElementById("labyrinth").play();
+        }
+        else if (selectedWord == "Who Framed Roger Rabbit") {
+            document.getElementById("roger").play();
         }
         //update win counter
         document.getElementById("winNumber").innerHTML = wins;
@@ -106,33 +136,41 @@ function roundComplete() {
         losses++;
         document.getElementById("winLose").innerHTML = "You lost!";
         document.getElementById("reel").src = "./assets/images/gameover.png";
+        document.getElementById("lose").play();
         document.getElementById("lossesNumber").innerHTML = losses;
         startGame();
     }
 }
 
 function capitalizeFirst(letter, selectedWord) {
-    var spacedIndex = 0;
+
+
+    //we need to have a way to check if a letter after a space has already been chosen
+    var alreadyFoundCaps = []
     //if our letter in our word is at index 0 then it should be capatalized
     //if the letter comes after a space we will capatalize the first letter
+
+    //
     if (letter.toUpperCase() === selectedWord[0]) {
+        alreadyFoundCaps.push(letter.toUpperCase())
         return letter.toUpperCase();
+
     }
-    else if (selectedWord.indexOf(" ") != -1) {
-        spacedIndex = selectedWord.indexOf(" ") + 1;
-        if (letter.toUpperCase() === selectedWord[spacedIndex]) {
-            return letter.toUpperCase();
+    else if (selectedWord.indexOf(" ") != -1 && alreadyFoundCaps.indexOf(letter.toUpperCase()) == -1) {
+        if () {
+            spacedIndex = selectedWord.indexOf(" ") + 1;
+            if (letter.toUpperCase() === selectedWord[spacedIndex]) {
+                alreadyFoundCaps.push(letter.toUpperCase())
+                return letter.toUpperCase();
+            }
         }
+
     } else {
         return letter;
     }
 
 }
 
-function playAudio() {
-    var x = document.getElementById("audio");
-    x.play();
-}
 //check & debug
 
 //main process
