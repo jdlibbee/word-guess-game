@@ -1,5 +1,6 @@
 body {
     background: url(../images/neon-sunrise.jpeg);
+    overflow: scroll;
     font-size: 20px;
     color: white;
 }
