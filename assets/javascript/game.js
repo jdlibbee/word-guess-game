@@ -14,7 +14,6 @@
 // if turns is greater than zero and player guesses word - player wins and score increases;
 // hint button shows a letter;
 // if game over prompt to play again !
-
 //global variables. 
 var words = ["Beetlejuice", "Labyrinth", "Gremlins", "Ghostbusters", "Who Framed Roger Rabbit"];
 var selectedWord = "";
@@ -23,22 +22,18 @@ var blanks = 0;
 var blanksAndSuccesses = [];
 var wrongGuesses = [];
 var spacedIndex = 0;
+var foundLetters = [];
 //game counters
 var wins = 0;
 var losses = 0;
 var guesesLeft = 9;
-
 //check and debug
-
 //functions
 function startGame() {
     selectedWord = words[Math.floor(Math.random() * words.length)];
     lettersInWord = selectedWord.split("");
     blanks = lettersInWord.length;
-
     console.log(lettersInWord);
-
-
     //reset
     guesesLeft = 9;
     wrongGuesses = [];
@@ -46,7 +41,6 @@ function startGame() {
     hiddenValues = [];
     // document.getElementById("reel").src = "assets/images/mreels.jpeg";
     // document.getElementById("winLose").innerHTML = " ";
-
     for (var i = 0; i < lettersInWord.length; i++) {
         console.log(lettersInWord[i]);
         blanksAndSuccesses.push("_");
@@ -55,35 +49,32 @@ function startGame() {
         }
     }
     console.log(blanksAndSuccesses);
-
-
     //html update
     document.getElementById("currentWord").innerHTML = blanksAndSuccesses.join(" ");
     document.getElementById("guesses").innerHTML = guesesLeft;
     document.getElementById("winNumber").innerHTML = wins;
     document.getElementById("lossesNumber").innerHTML = losses;
-
     //test
     console.log(selectedWord);
     console.log(lettersInWord);
     console.log(blanks);
     console.log(blanksAndSuccesses);
 }
-
 function checkletters(letter) {
     var letterInWord = false;
-
     for (var i = 0; i < blanks; i++) {
         if (selectedWord[i] == capitalizeFirst(letter, selectedWord)) {
             letterInWord = true;
         }
     }
     if (letterInWord) {
+        console.log("i came in her after cap");
         for (var i = 0; i < blanks; i++) {
             if (selectedWord[i] == capitalizeFirst(letter, selectedWord)) {
                 blanksAndSuccesses[i] = capitalizeFirst(letter, selectedWord);
             }
         }
+        foundLetters.push(letter.toUpperCase())
     }
     // else if (letterInWord) {
     //     for (var i = 0; i < blanks; i++) {
@@ -96,18 +87,13 @@ function checkletters(letter) {
         wrongGuesses.push(letter);
         guesesLeft--;
     }
-
-
     console.log(blanksAndSuccesses);
-
 }
-
 function roundComplete() {
     console.log("Wins: " + wins + " | Losses: " + losses + " |Guesses Left " + guesesLeft);
     document.getElementById("guesses").innerHTML = guesesLeft;
     document.getElementById("currentWord").innerHTML = blanksAndSuccesses.join(" ");
     document.getElementById("guessedLetters").innerHTML = wrongGuesses.join(" ");
-
     //won
     if (lettersInWord.toString() == blanksAndSuccesses.toString()) {
         wins++;
@@ -130,6 +116,7 @@ function roundComplete() {
         }
         //update win counter
         document.getElementById("winNumber").innerHTML = wins;
+        foundLetters = [];
         startGame();
     }
     else if (guesesLeft == 0) {
@@ -141,50 +128,36 @@ function roundComplete() {
         startGame();
     }
 }
-
 function capitalizeFirst(letter, selectedWord) {
-
-
-    //we need to have a way to check if a letter after a space has already been chosen
-    var alreadyFoundCaps = []
-    //if our letter in our word is at index 0 then it should be capatalized
-    //if the letter comes after a space we will capatalize the first letter
-
-    //
-    if (letter.toUpperCase() === selectedWord[0]) {
-        alreadyFoundCaps.push(letter.toUpperCase())
-        return letter.toUpperCase();
-
-    }
-    else if (selectedWord.indexOf(" ") != -1 && alreadyFoundCaps.indexOf(letter.toUpperCase()) == -1) {
-        if () {
-            spacedIndex = selectedWord.indexOf(" ") + 1;
-            if (letter.toUpperCase() === selectedWord[spacedIndex]) {
-                alreadyFoundCaps.push(letter.toUpperCase())
-                return letter.toUpperCase();
-            }
-        } else {
-            return letter;
+    var splitWord = selectedWord.split(" ");
+    var found = false;
+    var foundLetter = "";
+    console.log(foundLetters, "this is found letters");
+    splitWord.forEach(function (word, index) {
+        if (word.charAt(0) == letter.toUpperCase() && foundLetters.join("").indexOf(letter.toUpperCase()) == -1) {
+            found = true;
+            foundLetter = letter.toUpperCase()
         }
+    })
+    console.log(found, "this is found");
+    if (found) {
+        console.log(foundLetter, "returned foun letter");
+        return foundLetter;
+    } else {
+        console.log(letter, "return lowercase letter");
+        return letter
     }
-
-
-
-
-    //check & debug
-
-    //main process
-    startGame();
-
-    //keyclicks
-    document.onkeyup = function (event) {
-        var letterGuessed = String.fromCharCode(event.keyCode).toLocaleLowerCase();
-        checkletters(letterGuessed);
-        roundComplete();
-
-
-        console.log(letterGuessed);
-    }
+}
+//check & debug
+//main process
+startGame();
+//keyclicks
+document.onkeyup = function (event) {
+    var letterGuessed = String.fromCharCode(event.keyCode).toLocaleLowerCase();
+    checkletters(letterGuessed);
+    roundComplete();
+    console.log(letterGuessed);
+}
 
 
 //check & debug
