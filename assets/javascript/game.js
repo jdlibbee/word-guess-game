@@ -157,34 +157,34 @@ function capitalizeFirst(letter, selectedWord) {
 
     }
     else if (selectedWord.indexOf(" ") != -1 && alreadyFoundCaps.indexOf(letter.toUpperCase()) == -1) {
-        // if () {
-        //     spacedIndex = selectedWord.indexOf(" ") + 1;
-        if (letter.toUpperCase() === selectedWord[spacedIndex]) {
-            alreadyFoundCaps.push(letter.toUpperCase())
-            return letter.toUpperCase();
+        if () {
+            spacedIndex = selectedWord.indexOf(" ") + 1;
+            if (letter.toUpperCase() === selectedWord[spacedIndex]) {
+                alreadyFoundCaps.push(letter.toUpperCase())
+                return letter.toUpperCase();
+            }
+        } else {
+            return letter;
         }
-    } else {
-        return letter;
     }
-}
 
 
 
 
-//check & debug
+    //check & debug
 
-//main process
-startGame();
+    //main process
+    startGame();
 
-//keyclicks
-document.onkeyup = function (event) {
-    var letterGuessed = String.fromCharCode(event.keyCode).toLocaleLowerCase();
-    checkletters(letterGuessed);
-    roundComplete();
+    //keyclicks
+    document.onkeyup = function (event) {
+        var letterGuessed = String.fromCharCode(event.keyCode).toLocaleLowerCase();
+        checkletters(letterGuessed);
+        roundComplete();
 
 
-    console.log(letterGuessed);
-}
+        console.log(letterGuessed);
+    }
 
 
 //check & debug
